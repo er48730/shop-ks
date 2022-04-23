@@ -11,7 +11,7 @@ function App() {
       <header className="row">
         <div>
           <a className="brand" href="/">
-            Shop-Ks
+            SHOP-KS
           </a>
         </div>
         <div>
