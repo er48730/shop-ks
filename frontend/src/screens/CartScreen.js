@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import MessageBox from '../components/MessageBox';
 
@@ -32,7 +31,7 @@ export default function CartScreen(props) {
                 <h1>Shopping Cart</h1>
                 {cartItems.length === 0 ? (
                     <MessageBox>
-                        Cart is empty. <Link to="/">Go Shopping</Link>
+                        Cart is empty. <a href="/">Go Shopping</a>
                     </MessageBox>
                 ) : (
                     <ul>
@@ -47,7 +46,7 @@ export default function CartScreen(props) {
                                         ></img>
                                     </div>
                                     <div className="min-30">
-                                        <Link to={`/product/${item.product}`}>{item.name}</Link>
+                                        <a href={`/product/${item.product}`}>{item.name}</a>
                                     </div>
                                     <div>
                                         <select
