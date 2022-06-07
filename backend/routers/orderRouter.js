@@ -2,7 +2,17 @@ import exress from "express";
 import expressAsyncHandler from "express-async-handler";
 import { isAuth } from "../utils.js";
 import Order from "../models/orderModel.js";
+
 const orderRouter = exress.Router();
+
+orderRouter.get(
+  "/mine",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    res.send(orders);
+  })
+);
 
 orderRouter.post(
   "/",
@@ -57,9 +67,9 @@ orderRouter.put(
         email_address: req.body.email_address,
       };
       const updatedOrder = await order.save();
-      res.send({ message: 'Order Paid', order: updatedOrder});
+      res.send({ message: "Order Paid", order: updatedOrder });
     } else {
-        res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).send({ message: "Order Not Found" });
     }
   })
 );
