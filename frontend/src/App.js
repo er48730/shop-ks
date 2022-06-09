@@ -14,6 +14,7 @@ import SigninScreen from "./screens/SigninScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import PrivateRoute from "./components/PrivateRoute";
+import { Link } from "../node_modules/react-router-dom/index";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -60,6 +61,25 @@ function App() {
               </div>
             ) : (
               <a href="/signin">Sign In</a>
+            )}
+            {userInfo && userInfo.isAdmin && (
+              <div className="dropdown">
+              <Link to="#admin">Admin {''}<i className="fa fa-caret-down"></i></Link>
+              <ul className="dropdown-content">
+                <li>
+                  <Link to="/dashboard">Dashboard</Link>
+                </li>
+                <li>
+                  <Link to="/productlist">Products</Link>
+                </li>
+                <li>
+                  <Link to="/orderlist">Orders</Link>
+                </li>
+                <li>
+                  <Link to="/userlist">Users</Link>
+                </li>
+              </ul>
+              </div>
             )}
           </div>
         </header>
