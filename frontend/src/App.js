@@ -1,22 +1,21 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route } from "react-router-dom";
-import { signout } from "./actions/userActions";
-import CartScreen from "./screens/CartScreen";
-import HomeScreen from "./screens/HomeScreen";
-import OrderScreen from "./screens/OrderScreen";
-import PaymentMethodScreen from "./screens/PaymentMethodScreen";
-import PlaceOrderScreen from "./screens/PlaceOrderScreen";
-import ProductScreen from "./screens/ProductScreen";
-import RegisterScreen from "./screens/RegisterScreen";
-import ShippingAddressScreen from "./screens/ShippingAddressScreen";
-import SigninScreen from "./screens/SigninScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import OrderHistoryScreen from "./screens/OrderHistoryScreen";
-import PrivateRoute from "./components/PrivateRoute";
-import { Link } from "../node_modules/react-router-dom/index";
-
-function App() {
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { signout } from './actions/userActions';
+import AdminRoute from './components/AdminRoute';
+import PrivateRoute from './components/PrivateRoute';
+import CartScreen from './screens/CartScreen';
+import HomeScreen from './screens/HomeScreen';import OrderHistoryScreen from './screens/OrderHistoryScreen';
+import OrderScreen from './screens/OrderScreen';
+import PaymentMethodScreen from './screens/PaymentMethodScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import ProductListScreen from './screens/ProductListScreen';
+import ProductScreen from './screens/ProductScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import ShippingAddressScreen from './screens/ShippingAddressScreen';
+import SigninScreen from './screens/SigninScreen';
+export default function App() {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
@@ -30,55 +29,58 @@ function App() {
       <div className="grid-container">
         <header className="row">
           <div>
-            <a className="brand" href="/">
-              SHOP-KS
-            </a>
+            <Link className="brand" to="/">
+              amazona
+            </Link>
           </div>
           <div>
-            <a href="/cart">
+            <Link to="/cart">
               Cart
               {cartItems.length > 0 && (
                 <span className="badge">{cartItems.length}</span>
               )}
-            </a>
+            </Link>
             {userInfo ? (
               <div className="dropdown">
-                <a href="/">
-                  {userInfo.name} <i className="fa fa-caret-down"></i>
-                </a>
+                <Link to="#">
+                  {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                </Link>
                 <ul className="dropdown-content">
                   <li>
-                    <a href="/profile">User Profile</a>
+                    <Link to="/profile">User Profile</Link>
                   </li>
                   <li>
-                    <a href="/orderhistory">Order History</a>
+                    <Link to="/orderhistory">Order History</Link>
                   </li>
-                
-                  <a href="#signout" onClick={signoutHandler}>
-                    Sign Out
-                  </a>
+                  <li>
+                    <Link to="#signout" onClick={signoutHandler}>
+                      Sign Out
+                    </Link>
+                  </li>
                 </ul>
               </div>
             ) : (
-              <a href="/signin">Sign In</a>
+              <Link to="/signin">Sign In</Link>
             )}
             {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
-              <Link to="#admin">Admin {''}<i className="fa fa-caret-down"></i></Link>
-              <ul className="dropdown-content">
-                <li>
-                  <Link to="/dashboard">Dashboard</Link>
-                </li>
-                <li>
-                  <Link to="/productlist">Products</Link>
-                </li>
-                <li>
-                  <Link to="/orderlist">Orders</Link>
-                </li>
-                <li>
-                  <Link to="/userlist">Users</Link>
-                </li>
-              </ul>
+                <Link to="#admin">
+                  Admin <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/productlist">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/userlist">Users</Link>
+                  </li>
+                </ul>
               </div>
             )}
           </div>
@@ -86,6 +88,7 @@ function App() {
         <main>
           <Route path="/cart/:id?" component={CartScreen}></Route>
           <Route path="/product/:id" component={ProductScreen}></Route>
+          <Route path="/product/:id" component={ProductScreen} exact></Route>
           <Route path="/signin" component={SigninScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
           <Route path="/shipping" component={ShippingAddressScreen}></Route>
@@ -93,16 +96,18 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
-          <PrivateRoute 
-            path="/profile" 
+          <PrivateRoute
+            path="/profile"
             component={ProfileScreen}
-            ></PrivateRoute>
+          ></PrivateRoute>
+          <AdminRoute
+            path="/productlist"
+            component={ProductListScreen}
+          ></AdminRoute>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
-        <footer className="row center">All rights reserved</footer>
+        <footer className="row center">All right reserved</footer>
       </div>
     </BrowserRouter>
   );
 }
-
-export default App;
