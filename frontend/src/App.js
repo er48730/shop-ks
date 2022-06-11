@@ -16,6 +16,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
+import OrderListScreen from './screens/OrderListScreen';
 
 export default function App() {
   const cart = useSelector((state) => state.cart);
@@ -111,6 +112,7 @@ export default function App() {
             path="/productlist"
             component={ProductListScreen}
           ></AdminRoute>
+          <AdminRoute path="/orderlist" component={OrderListScreen}></AdminRoute>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
         <footer className="row center">All right reserved</footer>

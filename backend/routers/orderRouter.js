@@ -1,9 +1,19 @@
 import exress from "express";
 import expressAsyncHandler from "express-async-handler";
-import { isAuth } from "../utils.js";
+import { isAdmin, isAuth } from "../utils.js";
 import Order from "../models/orderModel.js";
 
 const orderRouter = exress.Router();
+
+orderRouter.get(
+  '/',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({}).populate('user', 'name');
+    res.send(orders);
+  })
+);
 
 orderRouter.get(
   "/mine",
