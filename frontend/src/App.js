@@ -26,6 +26,7 @@ import SearchScreen from './screens/SearchScreen';
 import { listProductCategories } from './actions/productActions';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
+import DashboardScreen from './screens/DashboardScreen';
 
 export default function App() {
   const cart = useSelector((state) => state.cart);
@@ -207,7 +208,7 @@ export default function App() {
             exact
           ></Route>
           <PrivateRoute
-          path="/profile"
+            path="/profile"
             component={ProfileScreen}
           ></PrivateRoute>
           <AdminRoute
@@ -229,6 +230,10 @@ export default function App() {
             component={UserEditScreen}
           ></AdminRoute>
           <AdminRoute path="/orderlist" component={OrderListScreen} exact></AdminRoute>
+          <AdminRoute
+            path="/dashboard"
+            component={DashboardScreen}
+          ></AdminRoute>
           <SellerRoute
             path="/productlist/seller"
             component={ProductListScreen}
