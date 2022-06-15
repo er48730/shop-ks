@@ -134,7 +134,7 @@ export default function ProfileScreen() {
                   <label htmlFor="sellerLogo">Seller Logo</label>
                   <input
                     id="sellerLogo"
-                    type="img"
+                    type="string"
                     placeholder="Enter Seller Logo"
                     value={sellerLogo}
                     onChange={(e) => setSellerLogo(e.target.value)}
