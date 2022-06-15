@@ -21,6 +21,9 @@ import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import SellerRoute from './components/SellerRoute';
 import SellerScreen from './screens/SellerScreen';
+import SearchBox from './components/SearchBox';
+import SearchScreen from './screens/SearchScreen';
+
 
 export default function App() {
   const cart = useSelector((state) => state.cart);
@@ -39,6 +42,13 @@ export default function App() {
             <Link className="brand" to="/">
               amazona
             </Link>
+          </div>
+          <div>
+            <Route
+              render={({ history }) => (
+                <SearchBox history={history}></SearchBox>
+              )}
+            ></Route>
           </div>
           <div>
             <Link to="/cart">
@@ -69,7 +79,7 @@ export default function App() {
             ) : (
               <Link to="/signin">Sign In</Link>
             )}
-           
+
             {userInfo && userInfo.isSeller && (
               <div className="dropdown">
                 <Link to="#admin">
@@ -109,7 +119,7 @@ export default function App() {
           </div>
         </header>
         <main>
-        <Route path="/seller/:id" component={SellerScreen}></Route>
+          <Route path="/seller/:id" component={SellerScreen}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>
           {/* <Route path="/product/:id" component={ProductScreen}></Route> */}
           <Route path="/product/:id" component={ProductScreen} exact></Route>
@@ -125,6 +135,11 @@ export default function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <Route
+            path="/search/name/:name?"
+            component={SearchScreen}
+            exact
+          ></Route>
           <PrivateRoute
             path="/profile"
             component={ProfileScreen}
@@ -146,7 +161,7 @@ export default function App() {
           <SellerRoute
             path="/productlist/seller"
             component={ProductListScreen}
-           ></SellerRoute>
+          ></SellerRoute>
           <SellerRoute
             path="/orderlist/seller"
             component={OrderListScreen}
