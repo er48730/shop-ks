@@ -191,13 +191,18 @@ export default function App() {
             component={SearchScreen}
             exact
           ></Route>
-            <Route
+          <Route
             path="/search/category/:category"
             component={SearchScreen}
             exact
           ></Route>
           <Route
             path="/search/category/:category/name/:name"
+            component={SearchScreen}
+            exact
+          ></Route>
+          <Route
+            path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order"
             component={SearchScreen}
             exact
           ></Route>
