@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { signin } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function SigninScreen(props) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const redirect = props.location.search
-  ? props.location.search.split('=')[1]
-  : '/';
+  const { search } = useLocation();
+  const redirectInUrl = new URLSearchParams(search).get("redirect");
+  const redirect = redirectInUrl ? redirectInUrl : "/";
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo, loading, error } = userSignin;
@@ -18,14 +20,14 @@ export default function SigninScreen(props) {
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(signin(email,password))
+    dispatch(signin(email, password));
   };
 
   useEffect(() => {
-    if(userInfo) {
-      props.history.push(redirect);
+    if (userInfo) {
+      navigate(redirect);
     }
-  },[props.history, redirect, userInfo]);
+  }, [navigate, redirect, userInfo]);
   return (
     <form className="form" onSubmit={submitHandler}>
       <div>
@@ -62,7 +64,8 @@ export default function SigninScreen(props) {
       <div>
         <label />
         <div>
-          New customer <a href={`/register?redirect=${redirect}`}>Create your account</a>
+          New customer{" "}
+          <a href={`/register?redirect=${redirect}`}>Create your account</a>
         </div>
       </div>
     </form>

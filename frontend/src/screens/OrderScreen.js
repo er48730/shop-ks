@@ -5,10 +5,15 @@ import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { deliverOrder, detailsOrder, payOrder } from "../actions/orderActions";
 import Axios from "axios";
-import { ORDER_DELIVER_RESET, ORDER_PAY_RESET } from "../constants/orderConstants";
+import {
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from "../constants/orderConstants";
+import { useParams } from "react-router-dom";
 
 export default function OrderScreen(props) {
-  const orderId = props.match.params.id;
+  const params = useParams();
+  const { id: orderId } = params;
   const [sdkReady, setSdkReady] = useState(false);
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
@@ -16,7 +21,11 @@ export default function OrderScreen(props) {
   const { userInfo } = userSignin;
 
   const orderPay = useSelector((state) => state.orderPay);
-  const { loading: loadingPay, error: errorPay, success: successPay } = orderPay;
+  const {
+    loading: loadingPay,
+    error: errorPay,
+    success: successPay,
+  } = orderPay;
   const dispatch = useDispatch();
 
   const orderDeliver = useSelector((state) => state.orderDeliver);
@@ -38,9 +47,14 @@ export default function OrderScreen(props) {
       };
       document.body.appendChild(script);
     };
-    if (!order || successPay || successDeliver || (order && order._id !== orderId)) {
-      dispatch({ type: ORDER_PAY_RESET })
-      dispatch({ type: ORDER_DELIVER_RESET })
+    if (
+      !order ||
+      successPay ||
+      successDeliver ||
+      (order && order._id !== orderId)
+    ) {
+      dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(detailsOrder(orderId));
     } else {
       if (!order.isPaid) {

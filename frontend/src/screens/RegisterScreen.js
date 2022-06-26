@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function RegisterScreen(props) {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");
 
-  const redirect = props.location.search
-  ? props.location.search.split('=')[1]
-  : '/';
+  const { search } = useLocation();
+  const redirectInUrl = new URLSearchParams(search).get("redirect");
+  const redirect = redirectInUrl ? redirectInUrl : "/";
 
   const userRegister = useSelector((state) => state.userRegister);
   const { userInfo, loading, error } = userRegister;
@@ -20,17 +22,17 @@ export default function RegisterScreen(props) {
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
-    if(password !== confirmpassword) {
-      alert('Password and confrim password are not match')
+    if (password !== confirmpassword) {
+      alert("Password and confrim password are not match");
     }
-    dispatch(register(name, email,password))
+    dispatch(register(name, email, password));
   };
 
   useEffect(() => {
-    if(userInfo) {
-      props.history.push(redirect);
+    if (userInfo) {
+      navigate(redirect);
     }
-  },[props.history, redirect, userInfo]);
+  }, [navigate, redirect, userInfo]);
   return (
     <form className="form" onSubmit={submitHandler}>
       <div>
@@ -87,7 +89,8 @@ export default function RegisterScreen(props) {
       <div>
         <label />
         <div>
-          Already have an accoung? <a href={`/signin?redirect=${redirect}`}>Sign In</a>
+          Already have an accoung?{" "}
+          <a href={`/signin?redirect=${redirect}`}>Sign In</a>
         </div>
       </div>
     </form>
