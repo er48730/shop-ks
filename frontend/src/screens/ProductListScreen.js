@@ -48,7 +48,10 @@ export default function ProductListScreen(props) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
     dispatch(
-      listProducts({ seller: sellerMode ? userInfo._id : "", pageNumber })
+      listProducts({
+        seller: sellerMode ? userInfo._id : "",
+        pageNumber,
+      })
     );
   }, [
     createdProduct,
@@ -100,7 +103,7 @@ export default function ProductListScreen(props) {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {products.slice(0, 8).map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
