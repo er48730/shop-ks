@@ -155,7 +155,7 @@ export default function SearchScreen(props) {
                 <MessageBox>No Product Found</MessageBox>
               )}
               <div className="row center">
-                {products.map((product) => (
+                {products.slice(0, 8).map((product) => (
                   <Product key={product._id} product={product}></Product>
                 ))}
               </div>
